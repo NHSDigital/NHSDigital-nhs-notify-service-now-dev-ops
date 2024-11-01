@@ -11,21 +11,10 @@ on:
       - main
 
 jobs:
-  metadata:
-    name: "Set CI/CD metadata"
+  servicenow:
+    name: "servicenow setup"
     runs-on: ubuntu-latest
-    timeout-minutes: 1
-    outputs:
-      build_datetime_london: ${{ steps.variables.outputs.build_datetime_london }}
-      build_datetime: ${{ steps.variables.outputs.build_datetime }}
-      build_timestamp: ${{ steps.variables.outputs.build_timestamp }}
-      build_epoch: ${{ steps.variables.outputs.build_epoch }}
-      nodejs_version: ${{ steps.variables.outputs.nodejs_version }}
-      python_version: ${{ steps.variables.outputs.python_version }}
-      terraform_version: ${{ steps.variables.outputs.terraform_version }}
-      version: ${{ steps.variables.outputs.version }}
-      is_version_prerelease: ${{ steps.variables.outputs.is_version_prerelease }}
-      does_pull_request_exist: ${{ steps.pr_exists.outputs.does_pull_request_exist }}
+    timeout-minutes: 3601
     steps:
       - name: ServiceNow Change
         uses: ServiceNow/servicenow-devops-change@v4.0.0
@@ -42,10 +31,27 @@ jobs:
           changeCreationTimeOut: '3600'
           abortOnChangeCreationFailure: true
           abortOnChangeStepTimeout: true
-          deployment-gate: '{"environment":"deploymentgate","jobName":"Checkout code"}'
+          deployment-gate: '{"environment":"deploymentgate","jobName":"metadata"}'
+  metadata:
+    name: "Set CI/CD metadata"
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    environment: deploymentgate
+    needs: [servicenow]
+    outputs:
+      build_datetime_london: ${{ steps.variables.outputs.build_datetime_london }}
+      build_datetime: ${{ steps.variables.outputs.build_datetime }}
+      build_timestamp: ${{ steps.variables.outputs.build_timestamp }}
+      build_epoch: ${{ steps.variables.outputs.build_epoch }}
+      nodejs_version: ${{ steps.variables.outputs.nodejs_version }}
+      python_version: ${{ steps.variables.outputs.python_version }}
+      terraform_version: ${{ steps.variables.outputs.terraform_version }}
+      version: ${{ steps.variables.outputs.version }}
+      is_version_prerelease: ${{ steps.variables.outputs.is_version_prerelease }}
+      does_pull_request_exist: ${{ steps.pr_exists.outputs.does_pull_request_exist }}
+    steps:
       - name: "Checkout code"
         uses: actions/checkout@v4
-        environment: deploymentgate
       - name: "Set CI/CD variables"
         id: variables
         run: |
