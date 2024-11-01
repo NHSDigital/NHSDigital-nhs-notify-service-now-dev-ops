@@ -28,21 +28,21 @@ jobs:
       does_pull_request_exist: ${{ steps.pr_exists.outputs.does_pull_request_exist }}
     steps:
       - name: ServiceNow Change
-          uses: ServiceNow/servicenow-devops-change@v4.0.0
-          id: create
-          with:
-            devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
-            instance-url: ${{ secrets.SN_INSTANCE_URL }}
-            tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-            context-github: ${{ toJSON(github) }}
-            job-name: 'Deploy'
-            change-request: '{}'
-            interval: '100'
-            timeout: '3600'
-            changeCreationTimeOut: '3600'
-            abortOnChangeCreationFailure: true
-            abortOnChangeStepTimeout: true
-            deployment-gate: '{"environment":"deploymentgate","jobName":"Checkout code"}'
+        uses: ServiceNow/servicenow-devops-change@v4.0.0
+        id: create
+        with:
+          devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'Deploy'
+          change-request: '{}'
+          interval: '100'
+          timeout: '3600'
+          changeCreationTimeOut: '3600'
+          abortOnChangeCreationFailure: true
+          abortOnChangeStepTimeout: true
+          deployment-gate: '{"environment":"deploymentgate","jobName":"Checkout code"}'
       - name: "Checkout code"
         uses: actions/checkout@v4
         environment: deploymentgate
