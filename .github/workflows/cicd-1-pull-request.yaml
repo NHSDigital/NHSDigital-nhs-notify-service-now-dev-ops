@@ -29,6 +29,7 @@ jobs:
           interval: '100'
           timeout: '3600'
           changeCreationTimeOut: '3600'
+          deployment-gate: '{"environment":"deploymentgate","jobName":"metadata"}'
           #abortOnChangeCreationFailure: true
           #abortOnChangeStepTimeout: true
       
