@@ -12,7 +12,7 @@ on:
 
 jobs:
   servicenow:
-    name: "servicenow setup"
+    name: servicenow setup
     runs-on: ubuntu-latest
     timeout-minutes: 3601
     steps:
