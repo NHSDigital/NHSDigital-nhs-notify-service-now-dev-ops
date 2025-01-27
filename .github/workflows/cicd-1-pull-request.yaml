@@ -31,6 +31,7 @@ jobs:
           changeCreationTimeOut: '3600'
           abortOnChangeCreationFailure: true
           abortOnChangeStepTimeout: true
+          deployment-gate: '{"environment":"deploymentgate","jobName":"servicenow setup"}'
           
   metadata:
     name: "Set CI/CD metadata"
