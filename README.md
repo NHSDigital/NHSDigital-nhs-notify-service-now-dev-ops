@@ -12,3 +12,5 @@ Aaaand again
 dum dee dum
 
 deploy write permissions for call back
+
+deploy write is there
