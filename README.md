@@ -1,1 +1,1 @@
-A change
+auto close true
