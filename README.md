@@ -1,1 +1,1 @@
-auto close true
+monday monday
